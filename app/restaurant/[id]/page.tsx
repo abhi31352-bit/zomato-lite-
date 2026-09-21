@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import RatingBadge from "@/components/RatingBadge";
+import { RESTAURANT_IMAGES } from "@/components/restaurantImages";
 
 type Review = { id: number; rating: number; comment: string; createdAt: string };
 
@@ -44,6 +46,7 @@ export default function RestaurantPage() {
 
   const [data, setData] = useState<RestaurantData | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const imageSrc = RESTAURANT_IMAGES[Number(id)] ?? null;
 
   useEffect(() => {
     fetch(`/api/restaurants/${id}`)
@@ -83,18 +86,60 @@ export default function RestaurantPage() {
   return (
     <main className="bg-white text-[#1C1C1C]">
       <div className="mx-auto w-full max-w-[1100px] px-4 py-6 sm:px-6 sm:py-8">
-        <div
-          className="flex h-44 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#FFE9EC] via-[#FFF6F3] to-[#FFF9E6] text-7xl sm:h-64"
-          role="img"
-          aria-label="Burrito illustration placeholder"
-        >
-          🌯
-        </div>
-
-        <h1 className="mt-5 text-3xl font-bold sm:text-4xl">{data.name}</h1>
-        <p className="mt-1 text-[#696969]">
-          {data.cuisine} · {data.area}
-        </p>
+        {imageSrc ? (
+          <div className="relative h-[260px] overflow-hidden rounded-2xl sm:h-[380px]">
+            <Image
+              src={imageSrc}
+              alt={data.name}
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, 1100px"
+              className="object-cover"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"
+              aria-hidden="true"
+            />
+            <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-3 p-4 sm:p-6">
+              <div>
+                <h1 className="text-3xl font-bold text-white sm:text-4xl">{data.name}</h1>
+                <p className="mt-1 text-white/80">
+                  {data.cuisine} · {data.area}
+                </p>
+              </div>
+              {data.totalReviews > 0 && data.averageRating !== null && (
+                <div className="flex items-center gap-2">
+                  <RatingBadge value={data.averageRating} />
+                  <p className="text-sm text-white/80">
+                    {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div
+              className="flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#FFE9EC] via-[#FFF6F3] to-[#FFF9E6] text-7xl sm:h-64"
+              role="img"
+              aria-label="Burrito illustration placeholder"
+            >
+              🌯
+            </div>
+            <h1 className="mt-5 text-3xl font-bold sm:text-4xl">{data.name}</h1>
+            <p className="mt-1 text-[#696969]">
+              {data.cuisine} · {data.area}
+            </p>
+            {data.totalReviews > 0 && data.averageRating !== null && (
+              <div className="mt-4 flex items-center gap-2">
+                <RatingBadge value={data.averageRating} />
+                <p className="text-sm text-[#696969]">
+                  {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
+                </p>
+              </div>
+            )}
+          </>
+        )}
 
         {data.totalReviews === 0 || data.averageRating === null ? (
           <div className="mt-8 rounded-xl border border-[#E8E8E8] bg-white p-6">
@@ -109,13 +154,6 @@ export default function RestaurantPage() {
           </div>
         ) : (
           <>
-            <div className="mt-4 flex items-center gap-2">
-              <RatingBadge value={data.averageRating} />
-              <p className="text-sm text-[#696969]">
-                {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
-              </p>
-            </div>
-
             {data.latestReview && (
               <section className="mt-6 rounded-xl border border-[#E8E8E8] bg-[#FFF7F7] p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[#E23744]">

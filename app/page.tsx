@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import RatingBadge from "@/components/RatingBadge";
+import { RESTAURANT_IMAGES } from "@/components/restaurantImages";
 
 type CardData = {
   name: string;
@@ -36,13 +38,25 @@ export default function Home() {
             href="/restaurant/1"
             className="mt-6 block max-w-sm overflow-hidden rounded-xl border border-[#E8E8E8] transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E23744]"
           >
-            <div
-              className="flex h-40 items-center justify-center bg-gradient-to-br from-[#FFE9EC] via-[#FFF6F3] to-[#FFF9E6] text-6xl"
-              role="img"
-              aria-label="Burrito illustration placeholder"
-            >
-              🌯
-            </div>
+            {RESTAURANT_IMAGES[1] ? (
+              <div className="relative aspect-video w-full">
+                <Image
+                  src={RESTAURANT_IMAGES[1]}
+                  alt="Ludhiana Burrito"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 400px"
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div
+                className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-[#FFE9EC] via-[#FFF6F3] to-[#FFF9E6] text-6xl"
+                role="img"
+                aria-label="Burrito illustration placeholder"
+              >
+                🌯
+              </div>
+            )}
             <div className="p-4">
               <p className="text-lg font-semibold">{data.name}</p>
               <p className="mt-0.5 text-sm text-[#696969]">
