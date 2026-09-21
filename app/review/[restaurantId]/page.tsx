@@ -72,7 +72,7 @@ export default function ReviewPage() {
                 aria-label={`${n} star${n > 1 ? "s" : ""}`}
                 onClick={() => setRating(n)}
                 className={`h-11 w-11 rounded-lg border text-xl transition-colors ${
-                  rating === n
+                  n <= rating
                     ? "border-[#E23744] bg-[#E23744] text-white"
                     : "border-[#E7E5E4] bg-white text-[#A8A29E] hover:border-[#E23744] hover:text-[#E23744]"
                 }`}
