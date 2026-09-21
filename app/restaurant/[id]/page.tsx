@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import RatingBadge from "@/components/RatingBadge";
 
 type Review = { id: number; rating: number; comment: string; createdAt: string };
 
@@ -23,6 +24,18 @@ function formatDate(iso: string) {
     hour: "numeric",
     minute: "2-digit",
   });
+}
+
+function ReviewRow({ review }: { review: Review }) {
+  return (
+    <li className="p-4 sm:p-5">
+      <div className="flex items-center gap-2">
+        <RatingBadge value={review.rating} />
+        <span className="text-sm text-[#696969]">{formatDate(review.createdAt)}</span>
+      </div>
+      <p className="mt-2">{review.comment}</p>
+    </li>
+  );
 }
 
 export default function RestaurantPage() {
@@ -49,8 +62,8 @@ export default function RestaurantPage() {
 
   if (notFound) {
     return (
-      <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
-        <div className="mx-auto w-full max-w-[560px] px-6 py-12">
+      <main className="bg-white text-[#1C1C1C]">
+        <div className="mx-auto w-full max-w-[1100px] px-4 py-8 sm:px-6">
           <p>Restaurant not found.</p>
         </div>
       </main>
@@ -59,77 +72,89 @@ export default function RestaurantPage() {
 
   if (!data) {
     return (
-      <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
-        <div className="mx-auto w-full max-w-[560px] px-6 py-12">
-          <p className="text-[#57534E]">Loading…</p>
+      <main className="bg-white text-[#1C1C1C]">
+        <div className="mx-auto w-full max-w-[1100px] px-4 py-8 sm:px-6">
+          <p className="text-[#696969]">Loading…</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
-      <header className="bg-[#E23744] text-white">
-        <div className="mx-auto w-full max-w-[560px] px-6 py-4">
-          <p className="text-xl font-bold lowercase tracking-tight">zomato lite</p>
+    <main className="bg-white text-[#1C1C1C]">
+      <div className="mx-auto w-full max-w-[1100px] px-4 py-6 sm:px-6 sm:py-8">
+        <div
+          className="flex h-44 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#FFE9EC] via-[#FFF6F3] to-[#FFF9E6] text-7xl sm:h-64"
+          role="img"
+          aria-label="Burrito illustration placeholder"
+        >
+          🌯
         </div>
-      </header>
-      <div className="mx-auto w-full max-w-[560px] px-6 py-12">
-        <h1 className="text-2xl font-semibold">{data.name}</h1>
-        <p className="mt-1 text-sm text-[#78716C]">
+
+        <h1 className="mt-5 text-3xl font-bold sm:text-4xl">{data.name}</h1>
+        <p className="mt-1 text-[#696969]">
           {data.cuisine} · {data.area}
         </p>
 
         {data.totalReviews === 0 || data.averageRating === null ? (
-          <div className="mt-10 rounded-lg border border-[#E7E5E4] bg-white p-6">
-            <p className="text-lg">No reviews yet.</p>
-            <p className="mt-1 text-sm text-[#78716C]">Be the first to review this place.</p>
+          <div className="mt-8 rounded-xl border border-[#E8E8E8] bg-white p-6">
+            <p className="text-lg font-semibold">No reviews yet.</p>
+            <p className="mt-1 text-sm text-[#696969]">Be the first to review this place.</p>
             <Link
               href={`/review/${id}`}
-              className="mt-4 inline-block rounded-lg bg-[#E23744] px-5 py-2.5 text-sm font-medium text-white"
+              className="mt-4 inline-block rounded-lg bg-[#E23744] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C81F2D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E23744]"
             >
               Write the first review
             </Link>
           </div>
         ) : (
           <>
-            <div className="mt-8 flex items-baseline gap-3">
-              <p className="text-6xl font-semibold">{data.averageRating}</p>
-              <p className="text-sm text-[#78716C]">
+            <div className="mt-4 flex items-center gap-2">
+              <RatingBadge value={data.averageRating} />
+              <p className="text-sm text-[#696969]">
                 {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
               </p>
             </div>
 
             {data.latestReview && (
-              <section className="mt-8 rounded-lg border-2 border-[#E23744] bg-white p-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-[#E23744]">Latest review</p>
-                <p className="mt-2 text-sm">
-                  {data.latestReview.rating} / 5 · {formatDate(data.latestReview.createdAt)}
+              <section className="mt-6 rounded-xl border border-[#E8E8E8] bg-[#FFF7F7] p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-[#E23744]">
+                  Latest review
                 </p>
-                <p className="mt-1 text-base">{data.latestReview.comment}</p>
+                <div className="mt-3 flex items-center gap-2">
+                  <RatingBadge value={data.latestReview.rating} />
+                  <span className="text-sm text-[#696969]">
+                    {formatDate(data.latestReview.createdAt)}
+                  </span>
+                </div>
+                <p className="mt-2 text-lg">{data.latestReview.comment}</p>
               </section>
             )}
 
             <section className="mt-8">
-              <h2 className="text-sm font-medium text-[#57534E]">Older reviews</h2>
-              <ul className="mt-3 divide-y divide-[#E7E5E4] rounded-lg border border-[#E7E5E4] bg-white">
+              <h2 className="text-lg font-semibold">Older reviews</h2>
+              <ul className="mt-3 divide-y divide-[#E8E8E8] rounded-xl border border-[#E8E8E8]">
                 {data.reviews.map((r) => (
-                  <li key={r.id} className="p-4">
-                    <p className="text-sm text-[#57534E]">
-                      {r.rating} / 5 · {formatDate(r.createdAt)}
-                    </p>
-                    <p className="mt-1">{r.comment}</p>
-                  </li>
+                  <ReviewRow key={r.id} review={r} />
                 ))}
               </ul>
             </section>
 
             <Link
               href={`/review/${id}`}
-              className="mt-8 inline-block rounded-lg border border-[#E23744] px-5 py-2.5 text-sm font-medium text-[#E23744]"
+              className="mt-8 hidden rounded-lg bg-[#E23744] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C81F2D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E23744] md:inline-block"
             >
               Write a review
             </Link>
+
+            <div className="sticky bottom-0 -mx-4 mt-8 border-t border-[#E8E8E8] bg-white/95 px-4 py-3 backdrop-blur md:hidden">
+              <Link
+                href={`/review/${id}`}
+                className="block rounded-lg bg-[#E23744] px-6 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-[#C81F2D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E23744]"
+              >
+                Write a review
+              </Link>
+            </div>
           </>
         )}
       </div>
