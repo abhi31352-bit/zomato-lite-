@@ -49,7 +49,7 @@ export default function RestaurantPage() {
 
   if (notFound) {
     return (
-      <main className="min-h-screen bg-[#FAF9F7] text-[#1C1917]">
+      <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
         <div className="mx-auto w-full max-w-[560px] px-6 py-12">
           <p>Restaurant not found.</p>
         </div>
@@ -59,7 +59,7 @@ export default function RestaurantPage() {
 
   if (!data) {
     return (
-      <main className="min-h-screen bg-[#FAF9F7] text-[#1C1917]">
+      <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
         <div className="mx-auto w-full max-w-[560px] px-6 py-12">
           <p className="text-[#57534E]">Loading…</p>
         </div>
@@ -68,7 +68,7 @@ export default function RestaurantPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF9F7] text-[#1C1917]">
+    <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
       <div className="mx-auto w-full max-w-[560px] px-6 py-12">
         <h1 className="text-2xl font-semibold">{data.name}</h1>
         <p className="mt-1 text-sm text-[#78716C]">
@@ -81,7 +81,7 @@ export default function RestaurantPage() {
             <p className="mt-1 text-sm text-[#78716C]">Be the first to review this place.</p>
             <Link
               href={`/review/${id}`}
-              className="mt-4 inline-block rounded-lg bg-[#C2410C] px-5 py-2.5 text-sm font-medium text-white"
+              className="mt-4 inline-block rounded-lg bg-[#E23744] px-5 py-2.5 text-sm font-medium text-white"
             >
               Write the first review
             </Link>
@@ -96,8 +96,8 @@ export default function RestaurantPage() {
             </div>
 
             {data.latestReview && (
-              <section className="mt-8 rounded-lg border-2 border-[#C2410C] bg-white p-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-[#C2410C]">Latest review</p>
+              <section className="mt-8 rounded-lg border-2 border-[#E23744] bg-white p-5">
+                <p className="text-xs font-medium uppercase tracking-wide text-[#E23744]">Latest review</p>
                 <p className="mt-2 text-sm">
                   {data.latestReview.rating} / 5 · {formatDate(data.latestReview.createdAt)}
                 </p>
@@ -121,7 +121,7 @@ export default function RestaurantPage() {
 
             <Link
               href={`/review/${id}`}
-              className="mt-8 inline-block rounded-lg border border-[#C2410C] px-5 py-2.5 text-sm font-medium text-[#C2410C]"
+              className="mt-8 inline-block rounded-lg border border-[#E23744] px-5 py-2.5 text-sm font-medium text-[#E23744]"
             >
               Write a review
             </Link>

@@ -46,7 +46,7 @@ export default function ReviewPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF9F7] text-[#1C1917]">
+    <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
       <div className="mx-auto w-full max-w-[560px] px-6 py-12">
         <Link href={`/restaurant/${restaurantId}`} className="text-sm text-[#57534E] underline underline-offset-4">
           Back to restaurant
@@ -68,8 +68,8 @@ export default function ReviewPage() {
                 onClick={() => setRating(n)}
                 className={`h-11 w-11 rounded-lg border text-xl transition-colors ${
                   rating === n
-                    ? "border-[#C2410C] bg-[#C2410C] text-white"
-                    : "border-[#E7E5E4] bg-white text-[#A8A29E] hover:border-[#C2410C] hover:text-[#C2410C]"
+                    ? "border-[#E23744] bg-[#E23744] text-white"
+                    : "border-[#E7E5E4] bg-white text-[#A8A29E] hover:border-[#E23744] hover:text-[#E23744]"
                 }`}
               >
                 ★
@@ -88,12 +88,12 @@ export default function ReviewPage() {
             onChange={(e) => setComment(e.target.value)}
             rows={4}
             placeholder="What did you eat? How was it?"
-            className="mt-3 w-full rounded-lg border border-[#E7E5E4] bg-white p-4 text-base placeholder:text-[#A8A29E] focus:border-[#C2410C] focus:outline-none"
+            className="mt-3 w-full rounded-lg border border-[#E7E5E4] bg-white p-4 text-base placeholder:text-[#A8A29E] focus:border-[#E23744] focus:outline-none"
           />
         </div>
 
         {error && (
-          <p role="alert" className="mt-4 rounded-lg border border-[#C2410C] bg-white p-3 text-sm">
+          <p role="alert" className="mt-4 rounded-lg border border-[#E23744] bg-white p-3 text-sm">
             {error}
           </p>
         )}
@@ -102,7 +102,7 @@ export default function ReviewPage() {
           type="button"
           onClick={onSubmit}
           disabled={!canSubmit}
-          className="mt-6 w-full rounded-lg bg-[#C2410C] py-3 text-base font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
+          className="mt-6 w-full rounded-lg bg-[#E23744] py-3 text-base font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
         >
           {submitting ? "Submitting…" : "Submit review"}
         </button>
