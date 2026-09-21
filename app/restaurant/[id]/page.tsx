@@ -69,6 +69,11 @@ export default function RestaurantPage() {
 
   return (
     <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
+      <header className="bg-[#E23744] text-white">
+        <div className="mx-auto w-full max-w-[560px] px-6 py-4">
+          <p className="text-xl font-bold lowercase tracking-tight">zomato lite</p>
+        </div>
+      </header>
       <div className="mx-auto w-full max-w-[560px] px-6 py-12">
         <h1 className="text-2xl font-semibold">{data.name}</h1>
         <p className="mt-1 text-sm text-[#78716C]">

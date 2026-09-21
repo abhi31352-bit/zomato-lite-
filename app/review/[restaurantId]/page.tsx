@@ -47,6 +47,11 @@ export default function ReviewPage() {
 
   return (
     <main className="min-h-screen bg-[#FFFFFF] text-[#1C1917]">
+      <header className="bg-[#E23744] text-white">
+        <div className="mx-auto w-full max-w-[560px] px-6 py-4">
+          <p className="text-xl font-bold lowercase tracking-tight">zomato lite</p>
+        </div>
+      </header>
       <div className="mx-auto w-full max-w-[560px] px-6 py-12">
         <Link href={`/restaurant/${restaurantId}`} className="text-sm text-[#57534E] underline underline-offset-4">
           Back to restaurant
